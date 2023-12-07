@@ -35,6 +35,7 @@ import {
 import { ZERO_ADDRESS } from "./constants";
 import { getTestnetReserveAddressFromSymbol, POOL_DATA_PROVIDER } from ".";
 import { ENABLE_REWARDS } from "./env";
+import { ParallelMarket } from "../markets/prallel";
 
 declare var hre: HardhatRuntimeEnvironment;
 
@@ -49,6 +50,7 @@ export enum ConfigNames {
   Optimistic = "Optimistic",
   Arbitrum = "Arbitrum",
   Ethereum = "Ethereum",
+  Parallel = "Parallel",
 }
 
 export const getParamPerNetwork = <T>(
@@ -114,6 +116,8 @@ export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
       return ArbitrumConfig;
     case ConfigNames.Ethereum:
       return EthereumV3Config;
+    case ConfigNames.Parallel:
+      return ParallelMarket;
     default:
       throw new Error(
         `Unsupported pool configuration: ${configName} is not one of the supported configs ${Object.values(

@@ -11,6 +11,7 @@ import {
   eAvalancheNetwork,
   eFantomNetwork,
   eOptimismNetwork,
+  eParallelNetwork,
 } from "./types";
 
 require("dotenv").config();
@@ -91,6 +92,11 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     eEthereumNetwork.sepolia
   )}`,
   [eArbitrumNetwork.goerliNitro]: `https://goerli-rollup.arbitrum.io/rpc`,
+  // [eParallelNetwork.devL3]: "http://127.0.0.1:8545",
+  [eParallelNetwork.devL3]:
+    "https://nitrorpc-compact-lime-moose-5r7g6fkl78.t.conduit.xyz",
+  [eParallelNetwork.devL2]:
+    "https://nitrorpc-widespread-brown-mosquito-de4v5k1jm5.t.conduit.xyz",
 };
 
 export const LIVE_NETWORKS: iParamsPerNetwork<boolean> = {
@@ -100,7 +106,8 @@ export const LIVE_NETWORKS: iParamsPerNetwork<boolean> = {
   [eHarmonyNetwork.main]: true,
   [eAvalancheNetwork.avalanche]: true,
   [eFantomNetwork.main]: true,
-  [eOptimismNetwork.main]: true,
+  [eOptimismNetwork.main]: true, //identify if need to deploy test asset
+  [eParallelNetwork.devL3]: true,
 };
 
 const GAS_PRICE_PER_NET: iParamsPerNetwork<string | number> = {

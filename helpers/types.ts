@@ -17,9 +17,15 @@ export type eNetwork =
   | eHarmonyNetwork
   | eFantomNetwork
   | eOptimismNetwork
-  | eTenderlyNetwork;
+  | eTenderlyNetwork
+  | eParallelNetwork;
 
 type eTenderlyNetwork = "tenderly";
+
+export enum eParallelNetwork {
+  devL3 = "devL3",
+  devL2 = "devL2",
+}
 
 export enum eFantomNetwork {
   main = "fantom",

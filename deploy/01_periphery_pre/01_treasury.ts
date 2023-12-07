@@ -50,7 +50,11 @@ const func: DeployFunction = async function ({
   );
   let treasuryOwner = POOL_ADMIN[network];
 
-  if (isTestnetMarket(await loadPoolConfig(MARKET_NAME))) {
+  // if (isTestnetMarket(await loadPoolConfig(MARKET_NAME))) {
+  //   treasuryOwner = deployer;
+  // }
+
+  if (!treasuryOwner) {
     treasuryOwner = deployer;
   }
 

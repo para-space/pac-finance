@@ -13,6 +13,7 @@ import {
   eFantomNetwork,
   eHarmonyNetwork,
   eOptimismNetwork,
+  eParallelNetwork,
   ePolygonNetwork,
   eTenderly,
 } from "./helpers/types";
@@ -120,6 +121,18 @@ export default {
     [eArbitrumNetwork.goerliNitro]: getCommonNetworkConfig(
       eArbitrumNetwork.goerliNitro,
       421613
+    ),
+    // [eParallelNetwork.devL3]: getCommonNetworkConfig(
+    //   eParallelNetwork.devL3,
+    //   31337
+    // ),
+    [eParallelNetwork.devL3]: getCommonNetworkConfig(
+      eParallelNetwork.devL3,
+      3163830386846714
+    ),
+    [eParallelNetwork.devL2]: getCommonNetworkConfig(
+      eParallelNetwork.devL2,
+      4009937698923195
     ),
   },
   namedAccounts: {

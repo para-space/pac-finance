@@ -20,6 +20,8 @@ const func: DeployFunction = async function ({
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
+  return true;
+
   const network = (
     process.env.FORK ? process.env.FORK : hre.network.name
   ) as eNetwork;
