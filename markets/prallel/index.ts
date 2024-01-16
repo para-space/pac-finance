@@ -15,24 +15,24 @@ export const ParallelMarket: IAaveConfiguration = {
   VariableDebtTokenNamePrefix: "Parallel",
   OracleQuoteCurrency: "ETH",
   OracleQuoteUnit: "18",
-  SymbolPrefix: "Eth", //这个是aToken symbol的prefix，需要再确认这个配置
+  SymbolPrefix: "Parallel",
   ReservesConfig: {
     USDC: strategyUSDC,
     WBTC: strategyWBTC,
     WETH: strategyWETH,
   },
   ReserveAssets: {
-    [eParallelNetwork.devL3]: {
-      USDC: "0x03419fa2f2307FBD999320CA519c6A7b3049c7f6",
-      WBTC: "0xf79EacE85f637421487e0F19e7D948a3F6B1B5C7",
-      WETH: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",
+    [eParallelNetwork.devL2]: {
+      USDC: "0x5EC703Bfaada5EfFB0740d915e7C3348f4Ce558D",
+      WBTC: "0x379F674fF9a97D6500E7f665a68Fa4961ec13575",
+      WETH: "0x8fe830A831423EE60d2dF5D290899bafb5E00FDB",
     },
   },
   ChainlinkAggregator: {
-    [eParallelNetwork.devL3]: {
-      USDC: "0xF88189593343b5BeA7b07B8f3b7089083575a3A9",
-      WBTC: "0xcAba99E0E74121D2aE647D23C296CB2884Ea009D",
-      WETH: "0x82b0E695a30D94F4CF1eCEa63B2EDbD38Df5328C",
+    [eParallelNetwork.devL2]: {
+      USDC: "0x7c9EA6CAF2C6EEEEA2707f140E2eEa69EBa4353D",
+      WBTC: "0xd04f088E91FAf9358a53d84F27bfC8F6CF8F9bE2",
+      WETH: "0x0000000000000000000000000000000000000000",
     },
   },
 };

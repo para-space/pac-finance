@@ -5,6 +5,7 @@ import {
   eEthereumNetwork,
   eFantomNetwork,
   eHarmonyNetwork,
+  eMantaNetwork,
   eOptimismNetwork,
   eParallelNetwork,
   ePolygonNetwork,
@@ -46,7 +47,9 @@ export const WRAPPED_NATIVE_TOKEN_PER_NETWORK: { [network: string]: string } = {
   [eFantomNetwork.main]: "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83",
   [eHarmonyNetwork.main]: "0xcF664087a5bB0237a0BAd6742852ec6c8d69A27a",
   [ePolygonNetwork.polygon]: "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-  [eParallelNetwork.devL3]: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",
+  [eParallelNetwork.devL2]: "0x8fe830A831423EE60d2dF5D290899bafb5E00FDB",
+  [eMantaNetwork.testnet]: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19", //self deployed
+  [eMantaNetwork.main]: "0x0Dc808adcE2099A9F62AA87D9670745AbA741746", //self deployed
 };
 
 export const ZERO_BYTES_32 =
@@ -54,8 +57,8 @@ export const ZERO_BYTES_32 =
 
 export const MOCK_CHAINLINK_AGGREGATORS_PRICES: { [key: string]: string } = {
   AAVE: parseUnits("300", 8).toString(),
-  WETH: parseUnits("4000", 8).toString(),
-  ETH: parseUnits("4000", 8).toString(),
+  WETH: parseUnits("2600", 8).toString(),
+  ETH: parseUnits("2600", 8).toString(),
   DAI: parseUnits("1", 8).toString(),
   USDC: parseUnits("1", 8).toString(),
   USDT: parseUnits("1", 8).toString(),
@@ -77,6 +80,10 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES: { [key: string]: string } = {
   AGEUR: parseUnits("1.126", 8).toString(),
   JEUR: parseUnits("1.126", 8).toString(),
   DPI: parseUnits("149", 8).toString(),
+  WUSDM: parseUnits("1.1", 8).toString(),
+  STONE: parseUnits("2700", 8).toString(),
+  TIA: parseUnits("20", 8).toString(),
+  WSTETH: parseUnits("2800", 8).toString(),
 };
 
 export const chainlinkAggregatorProxy: Record<string, string> = {
@@ -101,6 +108,8 @@ export const chainlinkAggregatorProxy: Record<string, string> = {
   [eArbitrumNetwork.goerliNitro]: "0xC09e69E79106861dF5d289dA88349f10e2dc6b5C",
   [eEthereumNetwork.sepolia]: "0x6c60d915c7a646860dba836ffcb7f112b6cfdc76",
   [eParallelNetwork.devL3]: "0xF88189593343b5BeA7b07B8f3b7089083575a3A9",
+  [eParallelNetwork.devL2]: "0x7c9EA6CAF2C6EEEEA2707f140E2eEa69EBa4353D",
+  [eMantaNetwork.main]: "0x14CdFdBAc7038196F26fea1c9384ce92363F31CE",
 };
 
 export const chainlinkEthUsdAggregatorProxy: Record<string, string> = {
@@ -125,6 +134,9 @@ export const chainlinkEthUsdAggregatorProxy: Record<string, string> = {
   [eArbitrumNetwork.goerliNitro]: "0xC09e69E79106861dF5d289dA88349f10e2dc6b5C",
   [eEthereumNetwork.sepolia]: "0x6c60d915c7a646860dba836ffcb7f112b6cfdc76",
   [eParallelNetwork.devL3]: "0xF88189593343b5BeA7b07B8f3b7089083575a3A9",
+  [eParallelNetwork.devL2]: "0x7c9EA6CAF2C6EEEEA2707f140E2eEa69EBa4353D",
+  [eMantaNetwork.testnet]: "0x447eBcEa8371bf82269E6734fb71EA026D21A40E",
+  [eMantaNetwork.main]: "0x14CdFdBAc7038196F26fea1c9384ce92363F31CE",
 };
 
 export const ETHEREUM_SHORT_EXECUTOR =

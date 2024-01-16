@@ -13,7 +13,6 @@ export const DETERMINISTIC_DEPLOYMENT = process.env.DETERMINISTIC_DEPLOYMENT
 
 export const COMMON_DEPLOY_PARAMS = {
   log: true,
-  waitConfirmations: 4,
   deterministicDeployment: DETERMINISTIC_DEPLOYMENT ?? false,
 };
 

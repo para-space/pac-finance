@@ -14,6 +14,8 @@ import {
   eHarmonyNetwork,
   eOptimismNetwork,
   eParallelNetwork,
+  eMantaNetwork,
+  eBlashNetwork,
   ePolygonNetwork,
   eTenderly,
 } from "./helpers/types";
@@ -132,7 +134,20 @@ export default {
     ),
     [eParallelNetwork.devL2]: getCommonNetworkConfig(
       eParallelNetwork.devL2,
-      4009937698923195
+      2982896226593698
+    ),
+    [eMantaNetwork.main]: getCommonNetworkConfig(eMantaNetwork.main, 169),
+    [eMantaNetwork.testnet]: getCommonNetworkConfig(
+      eMantaNetwork.testnet,
+      3441005
+    ),
+    [eBlashNetwork.main]: getCommonNetworkConfig(
+        eBlashNetwork.main,
+        0
+    ),
+    [eBlashNetwork.testnet]: getCommonNetworkConfig(
+        eBlashNetwork.testnet,
+        0
     ),
   },
   namedAccounts: {

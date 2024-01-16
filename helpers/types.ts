@@ -18,6 +18,8 @@ export type eNetwork =
   | eFantomNetwork
   | eOptimismNetwork
   | eTenderlyNetwork
+  | eMantaNetwork
+  | eBlashNetwork
   | eParallelNetwork;
 
 type eTenderlyNetwork = "tenderly";
@@ -25,6 +27,16 @@ type eTenderlyNetwork = "tenderly";
 export enum eParallelNetwork {
   devL3 = "devL3",
   devL2 = "devL2",
+}
+
+export enum eMantaNetwork {
+  main = "manta",
+  testnet = "manta-testnet",
+}
+
+export enum eBlashNetwork {
+  main = "blast",
+  testnet = "blast-testnet",
 }
 
 export enum eFantomNetwork {
@@ -157,6 +169,7 @@ export enum ProtocolErrors {
   VL_BORROWING_NOT_ENABLED = "7", // 'Borrowing is not enabled'
   VL_INVALID_INTEREST_RATE_MODE_SELECTED = "8", // 'Invalid interest rate mode selected'
   VL_COLLATERAL_BALANCE_IS_0 = "9", // 'The collateral balance is 0'
+  // tslint:disable-next-line:max-line-length
   VL_HEALTH_FACTOR_LOWER_THAN_LIQUIDATION_THRESHOLD = "10", // 'Health factor is lesser than the liquidation threshold'
   VL_COLLATERAL_CANNOT_COVER_NEW_BORROW = "11", // 'There is not enough collateral to cover a new borrow'
   VL_STABLE_BORROWING_NOT_ENABLED = "12", // stable borrowing not enabled

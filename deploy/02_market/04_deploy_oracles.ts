@@ -2,7 +2,7 @@ import { getChainlinkOracles } from "../../helpers/market-config-helpers";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { COMMON_DEPLOY_PARAMS } from "../../helpers/env";
-import { V3_CORE_VERSION, ZERO_ADDRESS } from "../../helpers/constants";
+import {V3_CORE_VERSION, WRAPPED_NATIVE_TOKEN_PER_NETWORK, ZERO_ADDRESS} from "../../helpers/constants";
 import {
   FALLBACK_ORACLE_ID,
   ORACLE_ID,
@@ -56,7 +56,7 @@ const func: DeployFunction = async function ({
       assets,
       sources,
       fallbackOracleAddress,
-      ZERO_ADDRESS,
+      WRAPPED_NATIVE_TOKEN_PER_NETWORK[network],
       parseUnits("1", OracleQuoteUnit),
     ],
     ...COMMON_DEPLOY_PARAMS,
