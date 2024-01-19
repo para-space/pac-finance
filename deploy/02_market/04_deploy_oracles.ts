@@ -56,7 +56,7 @@ const func: DeployFunction = async function ({
       assets,
       sources,
       fallbackOracleAddress,
-      WRAPPED_NATIVE_TOKEN_PER_NETWORK[network],
+      ZERO_ADDRESS,
       parseUnits("1", OracleQuoteUnit),
     ],
     ...COMMON_DEPLOY_PARAMS,

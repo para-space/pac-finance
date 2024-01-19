@@ -11,7 +11,9 @@ import {
   eAvalancheNetwork,
   eFantomNetwork,
   eOptimismNetwork,
-  eParallelNetwork, eMantaNetwork,
+  eParallelNetwork,
+  eMantaNetwork,
+  eBlastNetwork,
 } from "./types";
 
 require("dotenv").config();
@@ -98,6 +100,7 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
     "https://rpc-surprised-harlequin-bonobo-fvcy2k9oqh.t.conduit.xyz",
   [eMantaNetwork.main]: "https://pacific-rpc.manta.network/http",
   [eMantaNetwork.testnet]: "https://pacific-rpc.testnet.manta.network/http",
+  [eBlastNetwork.testnet]: "https://sepolia.blast.io",
 };
 
 export const LIVE_NETWORKS: iParamsPerNetwork<boolean> = {
@@ -111,6 +114,8 @@ export const LIVE_NETWORKS: iParamsPerNetwork<boolean> = {
   [eParallelNetwork.devL3]: true,
   [eParallelNetwork.devL2]: true,
   [eMantaNetwork.main]: true,
+  [eBlastNetwork.main]: true,
+  [eBlastNetwork.testnet]: true,
 };
 
 const GAS_PRICE_PER_NET: iParamsPerNetwork<string | number> = {

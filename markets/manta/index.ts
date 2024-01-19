@@ -25,7 +25,7 @@ export const MantaMarket: IAaveConfiguration = {
   StableDebtTokenNamePrefix: "Parallel",
   VariableDebtTokenNamePrefix: "Parallel",
   OracleQuoteCurrency: "ETH",
-  OracleQuoteUnit: "18",
+  OracleQuoteUnit: "8",
   SymbolPrefix: " ",
   ReservesConfig: {
     WUSDM: strategyWUSDM,

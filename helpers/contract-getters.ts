@@ -1,5 +1,5 @@
 import { getFirstSigner } from "./utilities/signer";
-import { StakedTokenTransferStrategy } from "./../typechain";
+import { MockAggregator, StakedTokenTransferStrategy } from "./../typechain";
 import { PullRewardsTransferStrategy } from "./../typechain";
 import {
   AaveOracle,
@@ -177,6 +177,14 @@ export const getAaveOracle = async (
 ): Promise<AaveOracle> =>
   getContract(
     "AaveOracle",
+    address || (await hre.deployments.get(ORACLE_ID)).address
+  );
+
+export const getMockAggregator = async (
+  address?: tEthereumAddress
+): Promise<MockAggregator> =>
+  getContract(
+    "MockAggregator",
     address || (await hre.deployments.get(ORACLE_ID)).address
   );
 

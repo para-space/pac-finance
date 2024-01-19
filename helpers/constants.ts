@@ -2,6 +2,7 @@ import { parseEther, parseUnits } from "ethers/lib/utils";
 import {
   eArbitrumNetwork,
   eAvalancheNetwork,
+  eBlastNetwork,
   eEthereumNetwork,
   eFantomNetwork,
   eHarmonyNetwork,
@@ -49,7 +50,8 @@ export const WRAPPED_NATIVE_TOKEN_PER_NETWORK: { [network: string]: string } = {
   [ePolygonNetwork.polygon]: "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
   [eParallelNetwork.devL2]: "0x8fe830A831423EE60d2dF5D290899bafb5E00FDB",
   [eMantaNetwork.testnet]: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19", //self deployed
-  [eMantaNetwork.main]: "0x0Dc808adcE2099A9F62AA87D9670745AbA741746", //self deployed
+  [eMantaNetwork.main]: "0x0Dc808adcE2099A9F62AA87D9670745AbA741746",
+  [eBlastNetwork.testnet]: "0x4200000000000000000000000000000000000023",
 };
 
 export const ZERO_BYTES_32 =
@@ -110,6 +112,7 @@ export const chainlinkAggregatorProxy: Record<string, string> = {
   [eParallelNetwork.devL3]: "0xF88189593343b5BeA7b07B8f3b7089083575a3A9",
   [eParallelNetwork.devL2]: "0x7c9EA6CAF2C6EEEEA2707f140E2eEa69EBa4353D",
   [eMantaNetwork.main]: "0x14CdFdBAc7038196F26fea1c9384ce92363F31CE",
+  [eBlastNetwork.testnet]: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",
 };
 
 export const chainlinkEthUsdAggregatorProxy: Record<string, string> = {
@@ -137,6 +140,7 @@ export const chainlinkEthUsdAggregatorProxy: Record<string, string> = {
   [eParallelNetwork.devL2]: "0x7c9EA6CAF2C6EEEEA2707f140E2eEa69EBa4353D",
   [eMantaNetwork.testnet]: "0x447eBcEa8371bf82269E6734fb71EA026D21A40E",
   [eMantaNetwork.main]: "0x14CdFdBAc7038196F26fea1c9384ce92363F31CE",
+  [eBlastNetwork.testnet]: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",
 };
 
 export const ETHEREUM_SHORT_EXECUTOR =

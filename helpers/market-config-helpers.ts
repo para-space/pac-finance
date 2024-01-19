@@ -37,6 +37,7 @@ import { getTestnetReserveAddressFromSymbol, POOL_DATA_PROVIDER } from ".";
 import { ENABLE_REWARDS } from "./env";
 import { ParallelMarket } from "../markets/prallel";
 import MantaMarket from "../markets/manta";
+import BlastMarket from "../markets/blast";
 
 declare var hre: HardhatRuntimeEnvironment;
 
@@ -53,6 +54,7 @@ export enum ConfigNames {
   Ethereum = "Ethereum",
   Parallel = "Parallel",
   Manta = "Manta",
+  Blast = "Blast",
 }
 
 export const getParamPerNetwork = <T>(
@@ -122,6 +124,8 @@ export const loadPoolConfig = (configName: ConfigNames): PoolConfiguration => {
       return ParallelMarket;
     case ConfigNames.Manta:
       return MantaMarket;
+    case ConfigNames.Blast:
+      return BlastMarket;
     default:
       throw new Error(
         `Unsupported pool configuration: ${configName} is not one of the supported configs ${Object.values(

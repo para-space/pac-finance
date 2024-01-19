@@ -19,7 +19,7 @@ export type eNetwork =
   | eOptimismNetwork
   | eTenderlyNetwork
   | eMantaNetwork
-  | eBlashNetwork
+  | eBlastNetwork
   | eParallelNetwork;
 
 type eTenderlyNetwork = "tenderly";
@@ -34,7 +34,7 @@ export enum eMantaNetwork {
   testnet = "manta-testnet",
 }
 
-export enum eBlashNetwork {
+export enum eBlastNetwork {
   main = "blast",
   testnet = "blast-testnet",
 }
