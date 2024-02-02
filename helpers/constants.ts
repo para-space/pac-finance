@@ -64,7 +64,7 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES: { [key: string]: string } = {
   DAI: parseUnits("1", 8).toString(),
   USDC: parseUnits("1", 8).toString(),
   USDT: parseUnits("1", 8).toString(),
-  WBTC: parseUnits("60000", 8).toString(),
+  WBTC: parseUnits("42000", 8).toString(),
   USD: parseUnits("1", 8).toString(),
   LINK: parseUnits("30", 8).toString(),
   CRV: parseUnits("6", 8).toString(),
@@ -111,6 +111,7 @@ export const chainlinkAggregatorProxy: Record<string, string> = {
   [eEthereumNetwork.sepolia]: "0x6c60d915c7a646860dba836ffcb7f112b6cfdc76",
   [eParallelNetwork.devL3]: "0xF88189593343b5BeA7b07B8f3b7089083575a3A9",
   [eParallelNetwork.devL2]: "0x7c9EA6CAF2C6EEEEA2707f140E2eEa69EBa4353D",
+  [eMantaNetwork.testnet]: "0x447eBcEa8371bf82269E6734fb71EA026D21A40E",
   [eMantaNetwork.main]: "0x14CdFdBAc7038196F26fea1c9384ce92363F31CE",
   [eBlastNetwork.testnet]: "0x73104Ac1Fb5A46E2b57a68c0a4d88ae130Da7e19",
 };

@@ -4,6 +4,7 @@ import {
   IAaveConfiguration,
 } from "../../helpers/types";
 import {
+  strategyMANTA,
   strategySTONE,
   strategyTIA,
   strategyUSDC,
@@ -33,6 +34,7 @@ export const MantaMarket: IAaveConfiguration = {
     WETH: strategyWETH,
     USDC: strategyUSDC,
     TIA: strategyTIA,
+    MANTA: strategyMANTA,
     WSTETH: strategyWSTETH,
   },
   ReserveAssets: {
@@ -43,6 +45,7 @@ export const MantaMarket: IAaveConfiguration = {
       USDC: "0xb73603c5d87fa094b7314c74ace2e64d165016fb",
       TIA: "0x6fae4d9935e2fcb11fc79a64e917fb2bf14dafaa",
       WSTETH: "0x2fe3ad97a60eb7c79a976fc18bb5ffd07dd94ba5",
+      MANTA: "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
     },
   },
   ChainlinkAggregator: {
@@ -53,6 +56,7 @@ export const MantaMarket: IAaveConfiguration = {
       USDC: "0x75B3B424fb782dA0e8DCf9E30396001E60e4Cc3B",
       TIA: "0x5e10AE8fF2cB3dBc0492621f2f7f1cCca4be437D",
       WSTETH: "0xd525CE0c2e1925a2FC2a362af0d0aAF1BE5Fb7Dd",
+      MANTA: "0x31ae77FC227E4AAa730a38595c3e48A41bD58c2e",
     },
   },
 };

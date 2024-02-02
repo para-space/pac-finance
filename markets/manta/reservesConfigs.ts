@@ -21,6 +21,24 @@ export const strategyUSDC: IReserveParams = {
   borrowableIsolation: true,
 };
 
+export const strategyMANTA: IReserveParams = {
+  strategy: rateStrategyVolatileOne,
+  baseLTVAsCollateral: "5000",
+  liquidationThreshold: "8000",
+  liquidationBonus: "10500",
+  liquidationProtocolFee: "1000",
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  flashLoanEnabled: true,
+  reserveDecimals: "6",
+  aTokenImpl: eContractid.AToken,
+  reserveFactor: "1000",
+  supplyCap: "2000000000",
+  borrowCap: "0",
+  debtCeiling: "0",
+  borrowableIsolation: true,
+};
+
 export const strategyTIA: IReserveParams = {
   strategy: rateStrategyVolatileOne,
   baseLTVAsCollateral: "5000",
