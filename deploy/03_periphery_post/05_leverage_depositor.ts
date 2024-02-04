@@ -1,14 +1,16 @@
-import {
-  ConfigNames,
-  isTestnetMarket,
-  loadPoolConfig,
-} from "./../../helpers/market-config-helpers";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import { COMMON_DEPLOY_PARAMS, MARKET_NAME } from "../../helpers/env";
 import { WRAPPED_NATIVE_TOKEN_PER_NETWORK } from "../../helpers/constants";
-import { eNetwork } from "../../helpers/types";
-import { POOL_PROXY_ID, TESTNET_TOKEN_PREFIX } from "../../helpers";
-import { MARKET_NAME } from "../../helpers/env";
+import {
+  ConfigNames,
+  eNetwork,
+  getPool,
+  isTestnetMarket,
+  LEVERAGE_DEPOSITOR,
+  loadPoolConfig,
+  TESTNET_TOKEN_PREFIX,
+} from "../../helpers";
 
 const func: DeployFunction = async function ({
   getNamedAccounts,
@@ -17,9 +19,12 @@ const func: DeployFunction = async function ({
 }: HardhatRuntimeEnvironment) {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
+
   const network = (
     process.env.FORK ? process.env.FORK : hre.network.name
   ) as eNetwork;
+
+  const poolProxy = await getPool();
   const poolConfig = loadPoolConfig(MARKET_NAME as ConfigNames);
 
   let wrappedNativeTokenAddress;
@@ -39,16 +44,16 @@ const func: DeployFunction = async function ({
     wrappedNativeTokenAddress = WRAPPED_NATIVE_TOKEN_PER_NETWORK[network];
   }
 
-  const { address: poolAddress } = await deployments.get(POOL_PROXY_ID);
-
-  await deploy("WrappedTokenGatewayV3", {
+  const LeverageDepositor = await deploy(LEVERAGE_DEPOSITOR, {
     from: deployer,
-    args: [wrappedNativeTokenAddress, deployer, poolAddress],
+    contract: "LeverageDepositor",
+    args: [poolProxy.address, wrappedNativeTokenAddress],
+    ...COMMON_DEPLOY_PARAMS,
   });
+
+  console.log("LeverageDepositor deployed at:", LeverageDepositor.address);
 };
 
-func.tags = ["periphery-post", "WrappedTokenGateway"];
-func.dependencies = [];
-func.id = "WrappedTokenGateway";
+func.tags = ["periphery-post"];
 
 export default func;

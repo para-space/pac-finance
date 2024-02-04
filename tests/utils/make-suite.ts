@@ -6,24 +6,22 @@ import {
 import { Signer } from "ethers";
 import { evmRevert, evmSnapshot } from "../../helpers/utilities/tx";
 import { tEthereumAddress } from "../../helpers/types";
-import { Pool } from "../../typechain";
 import { AaveProtocolDataProvider } from "../../typechain";
 import { AToken } from "../../typechain";
 import { PoolConfigurator } from "../../typechain";
-
-import chai from "chai";
 import { PoolAddressesProvider } from "../../typechain";
 import { PoolAddressesProviderRegistry } from "../../typechain";
 import {
-  AaveOracle,
-  IERC20,
-  StableDebtToken,
+  LeverageDepositor,
+  Pool,
   VariableDebtToken,
+  WrappedTokenGatewayV3,
+  AaveOracle,
   WETH9,
-  WrappedTokenGateway,
   Faucet,
 } from "../../typechain";
 import {
+  LEVERAGE_DEPOSITOR,
   ORACLE_ID,
   POOL_ADDRESSES_PROVIDER_ID,
   POOL_CONFIGURATOR_PROXY_ID,
@@ -34,6 +32,7 @@ import {
   getAToken,
   getERC20,
   getFaucet,
+  getLeverageDepositor,
   getStableDebtToken,
   getVariableDebtToken,
   getWETH,
@@ -59,17 +58,12 @@ export interface TestEnv {
   helpersContract: AaveProtocolDataProvider;
   weth: WETH9;
   aWETH: AToken;
-  dai: IERC20;
-  aDai: AToken;
-  variableDebtDai: VariableDebtToken;
-  stableDebtDai: StableDebtToken;
-  aUsdc: AToken;
-  usdc: IERC20;
-  aave: IERC20;
+  debtWETH: VariableDebtToken;
   addressesProvider: PoolAddressesProvider;
   registry: PoolAddressesProviderRegistry;
-  wrappedTokenGateway: WrappedTokenGateway;
+  wrappedTokenGateway: WrappedTokenGatewayV3;
   faucetOwnable: Faucet;
+  leverageDepositor: LeverageDepositor;
 }
 
 let HardhatSnapshotId: string = "0x1";
@@ -89,17 +83,12 @@ const testEnv: TestEnv = {
   oracle: {} as AaveOracle,
   weth: {} as WETH9,
   aWETH: {} as AToken,
-  dai: {} as IERC20,
-  aDai: {} as AToken,
-  variableDebtDai: {} as VariableDebtToken,
-  stableDebtDai: {} as StableDebtToken,
-  aUsdc: {} as AToken,
-  usdc: {} as IERC20,
-  aave: {} as IERC20,
+  debtWETH: {} as VariableDebtToken,
   addressesProvider: {} as PoolAddressesProvider,
   registry: {} as PoolAddressesProviderRegistry,
-  wrappedTokenGateway: {} as WrappedTokenGateway,
+  wrappedTokenGateway: {} as WrappedTokenGatewayV3,
   faucetOwnable: {} as Faucet,
+  leverageDepositor: {} as LeverageDepositor,
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -141,7 +130,7 @@ export async function initializeMakeSuite() {
   testEnv.wrappedTokenGateway = (await ethers.getContractAt(
     "WrappedTokenGatewayV3",
     wrappedTokenGatewayArtifact.address
-  )) as WrappedTokenGateway;
+  )) as WrappedTokenGatewayV3;
   testEnv.pool = (await ethers.getContractAt(
     "Pool",
     poolArtifact.address
@@ -172,53 +161,25 @@ export async function initializeMakeSuite() {
   )) as AaveProtocolDataProvider;
 
   const allTokens = await testEnv.helpersContract.getAllATokens();
-  const aDaiAddress = allTokens.find(
-    (aToken) => aToken.symbol === "aEthDAI"
-  )?.tokenAddress;
-  const aUsdcAddress = allTokens.find(
-    (aToken) => aToken.symbol === "aEthUSDC"
-  )?.tokenAddress;
-
   const aWEthAddress = allTokens.find(
-    (aToken) => aToken.symbol === "aEthWETH"
+    (aToken) => aToken.symbol === "aTestWETH"
   )?.tokenAddress;
 
   const reservesTokens = await testEnv.helpersContract.getAllReservesTokens();
-
-  const daiAddress = reservesTokens.find(
-    (token) => token.symbol === "DAI"
-  )?.tokenAddress;
-  const {
-    variableDebtTokenAddress: variableDebtDaiAddress,
-    stableDebtTokenAddress: stableDebtDaiAddress,
-  } = await testEnv.helpersContract.getReserveTokensAddresses(daiAddress || "");
-  const usdcAddress = reservesTokens.find(
-    (token) => token.symbol === "USDC"
-  )?.tokenAddress;
-  const aaveAddress = reservesTokens.find(
-    (token) => token.symbol === "AAVE"
-  )?.tokenAddress;
   const wethAddress = reservesTokens.find(
     (token) => token.symbol === "WETH"
   )?.tokenAddress;
+  const { variableDebtTokenAddress: variableDebtAddress } =
+    await testEnv.helpersContract.getReserveTokensAddresses(wethAddress!);
+  testEnv.aWETH = await getAToken(aWEthAddress!);
+  testEnv.weth = await getWETH(wethAddress!);
+  testEnv.debtWETH = await getVariableDebtToken(variableDebtAddress);
 
-  if (!aDaiAddress || !aWEthAddress || !aUsdcAddress) {
-    process.exit(1);
-  }
-  if (!daiAddress || !usdcAddress || !aaveAddress || !wethAddress) {
-    process.exit(1);
-  }
-
-  testEnv.aDai = await getAToken(aDaiAddress);
-  testEnv.variableDebtDai = await getVariableDebtToken(variableDebtDaiAddress);
-  testEnv.stableDebtDai = await getStableDebtToken(stableDebtDaiAddress);
-  testEnv.aUsdc = await getAToken(aUsdcAddress);
-  testEnv.aWETH = await getAToken(aWEthAddress);
-
-  testEnv.dai = await getERC20(daiAddress);
-  testEnv.usdc = await getERC20(usdcAddress);
-  testEnv.aave = await getERC20(aaveAddress);
-  testEnv.weth = await getWETH(wethAddress);
+  const leverageDepositor = await deployments.get(LEVERAGE_DEPOSITOR);
+  testEnv.leverageDepositor = (await ethers.getContractAt(
+    leverageDepositor.abi,
+    leverageDepositor.address
+  )) as LeverageDepositor;
 
   if (isTestnetMarket(poolConfig)) {
     testEnv.faucetOwnable = await getFaucet();
