@@ -1,0 +1,20 @@
+{
+  "PoolAddressesProviderRegistry": 1705307305,
+  "LogicLibraries": 1705307396,
+  "Treasury": 1705307446,
+  "PoolAddressesProvider:Manta:aave-v3-core@1.19.0": 1705307583,
+  "MockPriceAggregators:Manta:aave-v3-core@1.19.0": 1705307645,
+  "PoolConfigurator": 1705307706,
+  "ACLManager:Manta:aave-v3-core@1.19.0": 1705307757,
+  "Oracles:Manta:aave-v3-core@1.19.0": 1705307763,
+  "InitOracles:Manta:aave-v3-core@1.19.0": 1705307774,
+  "PoolInitalization:Manta:aave-v3-core@1.19.0": 1705307825,
+  "Incentives:Manta:aave-v3-periphery@2.4.1": 1705307905,
+  "TokenImplementations:Manta:aave-v3-core@1.19.0": 1705307995,
+  "ReservesInit:Manta:aave-v3-core@1.19.0": 1705308101,
+  "PeripheryInit:Manta:aave-v3-periphery@2.4.1": 1705308116,
+  "ParaswapAdapters:Manta:aave-v3-periphery@2.4.1": 1705308133,
+  "PoolImplementation": 1705657192,
+  "L2PoolImplementations": 1705657192,
+  "WrappedTokenGateway": 1705657192
+}
