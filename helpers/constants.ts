@@ -16,13 +16,13 @@ const {
   version: coreVersion,
 }: {
   version: string;
-} = require("@aave/core-v3/package.json");
+} = require("../contracts/core-v3/package.json");
 const {
   version: peripheryVersion,
 }: {
   _resolved: string;
   version: string;
-} = require("@aave/periphery-v3/package.json");
+} = require("../contracts/periphery-v3/package.json");
 
 export const V3_CORE_VERSION = coreVersion;
 export const V3_PERIPHERY_VERSION = peripheryVersion;

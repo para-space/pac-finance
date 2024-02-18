@@ -5,10 +5,10 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {IPool, DataTypes} from "@aave/core-v3/contracts/interfaces/IPool.sol";
-import {IPoolAddressesProvider} from "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
-import {IWETH} from "@aave/core-v3/contracts/misc/interfaces/IWETH.sol";
-import {IFlashLoanSimpleReceiver} from "@aave/core-v3/contracts/flashloan/interfaces/IFlashLoanSimpleReceiver.sol";
+import {IPool, DataTypes} from "./core-v3/contracts/interfaces/IPool.sol";
+import {IPoolAddressesProvider} from "./core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
+import {IWETH} from "./core-v3/contracts/misc/interfaces/IWETH.sol";
+import {IFlashLoanSimpleReceiver} from "./core-v3/contracts/flashloan/interfaces/IFlashLoanSimpleReceiver.sol";
 
 /// @title PAC Leverage Deposit Contract
 /// @author PAC

@@ -1,4 +1,4 @@
-import { WrappedTokenGatewayV3__factory } from "./../../typechain/factories/@aave/periphery-v3/contracts/misc/WrappedTokenGatewayV3__factory";
+import { WrappedTokenGatewayV3__factory } from "./../../typechain/factories/contracts/periphery-v3/contracts/misc/WrappedTokenGatewayV3__factory";
 import { getFirstSigner } from "./../../helpers/utilities/signer";
 import { getAddressFromJson } from "./../../helpers/utilities/tx";
 import {

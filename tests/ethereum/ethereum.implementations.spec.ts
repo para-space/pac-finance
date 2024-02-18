@@ -24,7 +24,7 @@ import {
 } from "../../helpers";
 import { TREASURY_IMPL_ID } from "../../helpers/deploy-ids";
 import { getFirstSigner } from "../../helpers/utilities/signer";
-import { AaveEcosystemReserveV2__factory } from "../../typechain/factories/@aave/periphery-v3/contracts/treasury/AaveEcosystemReserveV2__factory";
+import { AaveEcosystemReserveV2__factory } from "../../typechain/factories/contracts/periphery-v3/contracts/treasury/AaveEcosystemReserveV2__factory";
 
 // Prevent error HH9 when importing this file inside tasks or helpers at Hardhat config load
 declare var hre: HardhatRuntimeEnvironment;

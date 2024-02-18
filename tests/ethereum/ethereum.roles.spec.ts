@@ -15,7 +15,7 @@ import {
 import { getOwnableContract } from "../../helpers/contract-getters";
 import { TREASURY_CONTROLLER_ID } from "../../helpers/deploy-ids";
 import { getFirstSigner } from "../../helpers/utilities/signer";
-import { AaveEcosystemReserveController__factory } from "../../typechain/factories/@aave/periphery-v3/contracts/treasury/AaveEcosystemReserveController__factory";
+import { AaveEcosystemReserveController__factory } from "../../typechain/factories/contracts/periphery-v3/contracts/treasury/AaveEcosystemReserveController__factory";
 import {
   getEmissionManager,
   getIncentivesV2,
