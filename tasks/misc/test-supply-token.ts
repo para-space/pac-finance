@@ -26,6 +26,12 @@ task(`test-supply-token`, `Test supply token`).setAction(async (_, hre) => {
   const testSigner = await hre.ethers.getSigner(deployer);
   const poolAdminSinger = await hre.ethers.getSigner(poolAdmin);
 
+  const poolConfigure = await getPoolConfiguratorProxy();
+  await poolConfigure.setSupplyCap(
+    "0x4200000000000000000000000000000000000022",
+    0
+  );
+
   // const faucet = await getFaucet();
   // await faucet.connect(testSigner).setPermissioned(false);
 
@@ -155,19 +161,19 @@ task(`test-supply-token`, `Test supply token`).setAction(async (_, hre) => {
   // console.log("usdmPrice:", usdmPrice.toString());
   // console.log("stonePrice:", stonePrice.toString());
 
-  const WETH = "0x4200000000000000000000000000000000000023";
-  const USDB = "0x4200000000000000000000000000000000000022";
-  const WBTC = "0x9639bB155245515885Df41161824006c6454C6A9";
-  let assetData = await poolProxy.connect(poolAdminSinger).getReserveData(WETH);
-  console.log("accData:", JSON.stringify(assetData));
-  assetData = await poolProxy.connect(poolAdminSinger).getReserveData(USDB);
-  console.log("accData:", JSON.stringify(assetData));
-  assetData = await poolProxy.connect(poolAdminSinger).getReserveData(WBTC);
-  console.log("accData:", JSON.stringify(assetData));
-  const accData = await poolProxy
-    .connect(poolAdminSinger)
-    .getUserAccountData("0x62258b7c541313d490E941C4fc2D4B1056064F4D");
-  console.log("accData:", JSON.stringify(accData));
+  // const WETH = "0x4200000000000000000000000000000000000023";
+  // const USDB = "0x4200000000000000000000000000000000000022";
+  // const WBTC = "0x9639bB155245515885Df41161824006c6454C6A9";
+  // let assetData = await poolProxy.connect(poolAdminSinger).getReserveData(WETH);
+  // console.log("accData:", JSON.stringify(assetData));
+  // assetData = await poolProxy.connect(poolAdminSinger).getReserveData(USDB);
+  // console.log("accData:", JSON.stringify(assetData));
+  // assetData = await poolProxy.connect(poolAdminSinger).getReserveData(WBTC);
+  // console.log("accData:", JSON.stringify(assetData));
+  // const accData = await poolProxy
+  //   .connect(poolAdminSinger)
+  //   .getUserAccountData("0x62258b7c541313d490E941C4fc2D4B1056064F4D");
+  // console.log("accData:", JSON.stringify(accData));
 
   //await poolProxy.connect(testSigner).borrow(usdm, 5, 2, 0, deployer);*/
 });

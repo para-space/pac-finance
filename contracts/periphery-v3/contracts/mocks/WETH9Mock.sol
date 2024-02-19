@@ -16,11 +16,10 @@ contract WETH9Mock is WETH9, Ownable {
         transferOwnership(owner);
     }
 
-    function mint(address account, uint256 value)
-        public
-        onlyOwner
-        returns (bool)
-    {
+    function mint(
+        address account,
+        uint256 value
+    ) public onlyOwner returns (bool) {
         balanceOf[account] += value;
         emit Transfer(address(0), account, value);
         return true;
