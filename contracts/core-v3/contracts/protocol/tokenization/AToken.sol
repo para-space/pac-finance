@@ -59,7 +59,8 @@ contract AToken is
         ScaledBalanceTokenBase(pool, "ATOKEN_IMPL", "ATOKEN_IMPL", 0)
         EIP712Base()
     {
-        // Intentionally left blank
+        //Set Gas Mode for Implementation Contract
+        BLAST.configureClaimableGas();
     }
 
     /// @inheritdoc IInitializableAToken
@@ -83,6 +84,9 @@ contract AToken is
         _incentivesController = incentivesController;
 
         _domainSeparator = _calculateDomainSeparator();
+
+        //Set Gas Mode for Proxy Contract
+        BLAST.configureClaimableGas();
 
         emit Initialized(
             underlyingAsset,
