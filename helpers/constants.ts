@@ -86,6 +86,7 @@ export const MOCK_CHAINLINK_AGGREGATORS_PRICES: { [key: string]: string } = {
   STONE: parseUnits("2700", 8).toString(),
   TIA: parseUnits("20", 8).toString(),
   WSTETH: parseUnits("2800", 8).toString(),
+  PUMP: parseUnits("10", 8).toString(),
 };
 
 export const chainlinkAggregatorProxy: Record<string, string> = {

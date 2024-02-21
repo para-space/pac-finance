@@ -13,6 +13,8 @@ contract Faucet is IFaucet, Ownable {
     /// @inheritdoc IFaucet
     uint256 public constant MAX_MINT_AMOUNT = 10000;
 
+    address public constant USDB = 0x4200000000000000000000000000000000000022;
+
     // Mapping to control mint of assets (allowed by default)
     mapping(address => bool) internal _nonMintable;
 
@@ -51,7 +53,12 @@ contract Faucet is IFaucet, Ownable {
             "Error: Mint limit transaction exceeded"
         );
 
-        TestnetERC20(token).mint(to, amount);
+        if (token == USDB) {
+            TestnetERC20(USDB).transfer(to, amount);
+        } else {
+            TestnetERC20(token).mint(to, amount);
+        }
+
         return amount;
     }
 
