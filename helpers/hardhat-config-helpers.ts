@@ -115,7 +115,7 @@ export const LIVE_NETWORKS: iParamsPerNetwork<boolean> = {
   [eParallelNetwork.devL2]: true,
   [eMantaNetwork.main]: true,
   [eBlastNetwork.main]: true,
-  [eBlastNetwork.testnet]: false,
+  [eBlastNetwork.testnet]: true,
 };
 
 const GAS_PRICE_PER_NET: iParamsPerNetwork<string | number> = {

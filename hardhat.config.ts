@@ -225,6 +225,19 @@ export default {
     ? DETERMINISTIC_FACTORIES
     : undefined,
   etherscan: {
-    apiKey: ETHERSCAN_KEY,
+    apiKey: {
+      [eBlastNetwork.testnet]: "blast_sepolia", // apiKey is not required, just set a placeholder
+    },
+    customChains: [
+      {
+        network: [eBlastNetwork.testnet],
+        chainId: 168587773,
+        urls: {
+          apiURL:
+            "https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan",
+          browserURL: "https://testnet.blastscan.io",
+        },
+      },
+    ],
   },
 };

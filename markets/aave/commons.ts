@@ -149,7 +149,7 @@ export const CommonsConfig: ICommonConfiguration = {
       liquidationThreshold: "9750",
       liquidationBonus: "10100",
       label: "Stablecoins",
-      assets: ["USDC"],
+      assets: [],
     },
   },
   L2PoolEnabled: {

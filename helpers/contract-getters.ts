@@ -1,5 +1,9 @@
 import { getFirstSigner } from "./utilities/signer";
-import { MockAggregator, StakedTokenTransferStrategy} from "./../typechain";
+import {
+  MockAggregator,
+  PacPoolWrapper,
+  StakedTokenTransferStrategy,
+} from "./../typechain";
 import { PullRewardsTransferStrategy } from "./../typechain";
 import {
   AaveOracle,
@@ -55,6 +59,7 @@ import {
   STAKE_AAVE_IMPL_V3,
   L2_ENCODER,
   FAUCET_OWNABLE_ID,
+  PAC_POOL_WRAPPER,
 } from "./deploy-ids";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { RewardsController } from "../typechain";
@@ -141,6 +146,14 @@ export const getPool = async (address?: tEthereumAddress): Promise<Pool> =>
   getContract(
     "Pool",
     address || (await hre.deployments.get(POOL_PROXY_ID)).address
+  );
+
+export const getPacPoolWrapper = async (
+  address?: tEthereumAddress
+): Promise<PacPoolWrapper> =>
+  getContract(
+    "PacPoolWrapper",
+    address || (await hre.deployments.get(PAC_POOL_WRAPPER)).address
   );
 
 export const getPriceOracle = async (
