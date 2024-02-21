@@ -20,6 +20,7 @@ import {
   WETH9,
   Faucet,
   GasRefund,
+  NativeYieldDistribute,
 } from "../../typechain";
 import {
   PAC_POOL_WRAPPER,
@@ -29,6 +30,7 @@ import {
   POOL_DATA_PROVIDER,
   POOL_PROXY_ID,
   GAS_REFUND,
+  Native_Yield_Distribute,
 } from "../../helpers/deploy-ids";
 import {
   getAToken,
@@ -64,6 +66,7 @@ export interface TestEnv {
   faucetOwnable: Faucet;
   poolWrapper: PacPoolWrapper;
   gasRefund: GasRefund;
+  wethYieldDistribute: NativeYieldDistribute;
 }
 
 let HardhatSnapshotId: string = "0x1";
@@ -90,6 +93,7 @@ const testEnv: TestEnv = {
   faucetOwnable: {} as Faucet,
   poolWrapper: {} as PacPoolWrapper,
   gasRefund: {} as GasRefund,
+  wethYieldDistribute: {} as NativeYieldDistribute,
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -187,6 +191,13 @@ export async function initializeMakeSuite() {
     gasRefund.abi,
     gasRefund.address
   )) as GasRefund;
+
+  const yieldDistribute = await deployments.get(Native_Yield_Distribute);
+  const yieldAddress = await testEnv.aWETH.yieldDistributor();
+  testEnv.wethYieldDistribute = (await ethers.getContractAt(
+    yieldDistribute.abi,
+    yieldAddress
+  )) as NativeYieldDistribute;
 
   if (isTestnetMarket(poolConfig)) {
     testEnv.faucetOwnable = await getFaucet();

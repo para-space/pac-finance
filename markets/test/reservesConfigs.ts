@@ -22,5 +22,5 @@ export const strategyWETH: IReserveParams = {
   borrowCap: "0",
   debtCeiling: "0",
   borrowableIsolation: false,
+  nativeYield: true,
 };
-

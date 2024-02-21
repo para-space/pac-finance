@@ -17,6 +17,7 @@ export const strategyUSDB: IReserveParams = {
   borrowCap: "0",
   debtCeiling: "0",
   borrowableIsolation: false,
+  nativeYield: true,
 };
 
 export const strategyWETH: IReserveParams = {
@@ -35,6 +36,7 @@ export const strategyWETH: IReserveParams = {
   borrowCap: "0",
   debtCeiling: "0",
   borrowableIsolation: false,
+  nativeYield: true,
 };
 
 export const strategyWBTC: IReserveParams = {
@@ -47,6 +49,24 @@ export const strategyWBTC: IReserveParams = {
   stableBorrowRateEnabled: false,
   flashLoanEnabled: true,
   reserveDecimals: "8",
+  aTokenImpl: eContractid.AToken,
+  reserveFactor: "1000",
+  supplyCap: "0",
+  borrowCap: "0",
+  debtCeiling: "0",
+  borrowableIsolation: false,
+};
+
+export const strategyPUMP: IReserveParams = {
+  strategy: rateStrategyVolatileOne,
+  baseLTVAsCollateral: "6000",
+  liquidationThreshold: "7000",
+  liquidationBonus: "10500",
+  liquidationProtocolFee: "1000",
+  borrowingEnabled: true,
+  stableBorrowRateEnabled: false,
+  flashLoanEnabled: true,
+  reserveDecimals: "18",
   aTokenImpl: eContractid.AToken,
   reserveFactor: "1000",
   supplyCap: "0",

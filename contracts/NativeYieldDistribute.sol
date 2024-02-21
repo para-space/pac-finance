@@ -11,6 +11,14 @@ import {IScaledBalanceToken} from "./core-v3/contracts/interfaces/IScaledBalance
 contract NativeYieldDistribute is Ownable, Pausable, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
+    event YieldDistributed(uint256 amount, uint256 timestamp);
+
+    event RescueToken(
+        address indexed token,
+        address indexed to,
+        uint256 amount
+    );
+
     struct UserInfo {
         uint256 currentBalance;
         uint256 balanceUpdateTime;
@@ -60,7 +68,7 @@ contract NativeYieldDistribute is Ownable, Pausable, ReentrancyGuard {
         address user,
         uint256 round
     ) public view returns (uint256) {
-        if (round > currentRound) {
+        if (round >= currentRound) {
             return 0;
         }
 
@@ -89,7 +97,7 @@ contract NativeYieldDistribute is Ownable, Pausable, ReentrancyGuard {
             index <= poolSettledRound;
             index++
         ) {
-            uint256 userPoint = getUserRoundPoint(msg.sender, index);
+            uint256 userPoint = getUserRoundPoint(user, index);
             uint256 yield = (userPoint * yieldPerPoint[index]) / RAY;
             accYield += yield;
         }
@@ -188,5 +196,20 @@ contract NativeYieldDistribute is Ownable, Pausable, ReentrancyGuard {
         roundSettleTime[currentRound] = block.timestamp;
         currentRoundTotalPoint = 0;
         currentRound++;
+
+        emit YieldDistributed(amount, block.timestamp);
+    }
+
+    function rescueToken(
+        address token,
+        address to,
+        uint256 amount
+    ) external onlyOwner {
+        if (token == address(0)) {
+            _safeTransferETH(to, amount);
+        } else {
+            IERC20(token).safeTransfer(to, amount);
+        }
+        emit RescueToken(token, to, amount);
     }
 }

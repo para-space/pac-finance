@@ -55,12 +55,12 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
     );
 
     /**
-     * @dev Emitted during rescueERC20()
+     * @dev Emitted during rescueToken()
      * @param token The address of the token
      * @param to The address of the recipient
      * @param amount The amount being rescued
      **/
-    event RescueERC20(
+    event RescueToken(
         address indexed token,
         address indexed to,
         uint256 amount
@@ -395,7 +395,7 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
      * @param to The account address to receive token
      * @param amount The amount to be rescued
      **/
-    function rescueERC20(
+    function rescueToken(
         address token,
         address to,
         uint256 amount
@@ -405,7 +405,7 @@ contract PacPoolWrapper is Ownable, ReentrancyGuard, IFlashLoanSimpleReceiver {
         } else {
             IERC20(token).safeTransfer(to, amount);
         }
-        emit RescueERC20(token, to, amount);
+        emit RescueToken(token, to, amount);
     }
 
     /**

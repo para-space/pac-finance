@@ -403,6 +403,7 @@ export interface IReserveParams
   reserveFactor: string;
   supplyCap: string;
   strategy: IInterestRateStrategyParams;
+  nativeYield?: boolean;
 }
 
 export interface IStrategy {

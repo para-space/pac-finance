@@ -227,7 +227,7 @@ makeSuite("Pac Pool Wrapper Test", (testEnv: TestEnv) => {
 
     await poolWrapper
       .connect(deployer.signer)
-      .rescueERC20(weth.address, deployer.address, parseEther("10"));
+      .rescueToken(weth.address, deployer.address, parseEther("10"));
 
     expect(await weth.balanceOf(deployer.address)).eq(parseEther("10"));
   });
@@ -273,7 +273,7 @@ makeSuite("Pac Pool Wrapper Test", (testEnv: TestEnv) => {
     await expect(
       poolWrapper
         .connect(users[1].signer)
-        .rescueERC20(weth.address, deployer.address, parseEther("5"))
+        .rescueToken(weth.address, deployer.address, parseEther("5"))
     ).to.be.revertedWith("Ownable: caller is not the owner");
 
     await expect(
