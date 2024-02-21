@@ -36,7 +36,7 @@ contract MockPoolInherited is Pool {
         return 0x3;
     }
 
-    constructor(IPoolAddressesProvider provider) Pool(provider) {}
+    constructor(IPoolAddressesProvider provider) Pool(provider, address(0)) {}
 
     function setMaxNumberOfReserves(uint16 newMaxNumberOfReserves) public {
         _maxNumberOfReserves = newMaxNumberOfReserves;

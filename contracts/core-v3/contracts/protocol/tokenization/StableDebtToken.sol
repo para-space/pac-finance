@@ -27,8 +27,7 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
     using WadRayMath for uint256;
     using SafeCast for uint256;
 
-    IBlast public constant BLAST =
-        IBlast(0x4300000000000000000000000000000000000002);
+    address public immutable BLAST;
     uint256 public constant DEBT_TOKEN_REVISION = 0x1;
 
     // Map of users address and the timestamp of their last update (userAddress => lastUpdateTimestamp)
@@ -54,8 +53,7 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
             0
         )
     {
-        //Set Gas Mode for Implementation Contract
-        BLAST.configureClaimableGas();
+        BLAST = pool.BLAST();
     }
 
     /// @inheritdoc IInitializableDebtToken
@@ -78,8 +76,9 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
 
         _domainSeparator = _calculateDomainSeparator();
 
-        //Set Gas Mode for Proxy Contract
-        BLAST.configureClaimableGas();
+        if (BLAST != address(0)) {
+            IBlast(BLAST).configureClaimableGas();
+        }
 
         emit Initialized(
             underlyingAsset,
@@ -504,6 +503,6 @@ contract StableDebtToken is DebtTokenBase, IncentivizedERC20, IStableDebtToken {
     }
 
     function claimRefundedGas(address recipient) external onlyPool {
-        BLAST.claimMaxGas(address(this), recipient);
+        IBlast(BLAST).claimMaxGas(address(this), recipient);
     }
 }

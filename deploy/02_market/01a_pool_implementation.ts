@@ -8,7 +8,7 @@ import {
 import { MARKET_NAME } from "../../helpers/env";
 import {
   ConfigNames,
-  eNetwork,
+  eNetwork, getBlastContractAddress,
   getPool,
   getPoolLibraries,
   isL2PoolSupported,
@@ -31,6 +31,7 @@ const func: DeployFunction = async function ({
   const { address: addressesProviderAddress } = await deployments.get(
     POOL_ADDRESSES_PROVIDER_ID
   );
+  const blastAddress = getBlastContractAddress(hre.network.name);
 
   if (isL2PoolSupported(poolConfig)) {
     console.log(
@@ -44,7 +45,7 @@ const func: DeployFunction = async function ({
   const poolArtifact = await deploy(POOL_IMPL_ID, {
     contract: "Pool",
     from: deployer,
-    args: [addressesProviderAddress],
+    args: [addressesProviderAddress, blastAddress],
     libraries: {
       ...commonLibraries,
     },

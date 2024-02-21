@@ -7,10 +7,11 @@ import {
   eNetwork,
   getPool,
   isTestnetMarket,
-  LEVERAGE_DEPOSITOR,
+  PAC_POOL_WRAPPER,
   loadPoolConfig,
-  TESTNET_TOKEN_PREFIX,
+  TESTNET_TOKEN_PREFIX, GAS_REFUND, PacPoolWrapper, waitForTx,
 } from "../../helpers";
+import {ethers} from "hardhat";
 
 const func: DeployFunction = async function ({
   getNamedAccounts,
@@ -44,14 +45,29 @@ const func: DeployFunction = async function ({
     wrappedNativeTokenAddress = WRAPPED_NATIVE_TOKEN_PER_NETWORK[network];
   }
 
-  const LeverageDepositor = await deploy(LEVERAGE_DEPOSITOR, {
+  const LeverageDepositor = await deploy(PAC_POOL_WRAPPER, {
     from: deployer,
-    contract: "LeverageDepositor",
+    contract: "PacPoolWrapper",
     args: [poolProxy.address, wrappedNativeTokenAddress],
     ...COMMON_DEPLOY_PARAMS,
   });
 
-  console.log("LeverageDepositor deployed at:", LeverageDepositor.address);
+  console.log("PacPoolWrapper deployed at:", LeverageDepositor.address);
+
+  const gasRefund = await deploy(GAS_REFUND, {
+    from: deployer,
+    contract: "GasRefund",
+    args: [LeverageDepositor.address],
+    ...COMMON_DEPLOY_PARAMS,
+  });
+  console.log("gasRefund deployed at:", gasRefund.address);
+
+  const poolWrapper = (await ethers.getContractAt(
+    LeverageDepositor.abi,
+    LeverageDepositor.address
+  )) as PacPoolWrapper;
+
+  await waitForTx(await poolWrapper.setGasRefund(gasRefund.address));
 };
 
 func.tags = ["periphery-post"];

@@ -17,7 +17,7 @@ contract L2Pool is Pool, IL2Pool {
      * @dev Constructor.
      * @param provider The address of the PoolAddressesProvider contract
      */
-    constructor(IPoolAddressesProvider provider) Pool(provider) {
+    constructor(IPoolAddressesProvider provider) Pool(provider, address(0)) {
         // Intentionally left blank
     }
 

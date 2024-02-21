@@ -1,5 +1,5 @@
 import { getFirstSigner } from "./utilities/signer";
-import {LeverageDepositor, MockAggregator, StakedTokenTransferStrategy} from "./../typechain";
+import { MockAggregator, StakedTokenTransferStrategy} from "./../typechain";
 import { PullRewardsTransferStrategy } from "./../typechain";
 import {
   AaveOracle,
@@ -66,10 +66,6 @@ import { EmissionManager } from "../typechain";
 
 // Prevent error HH9 when importing this file inside tasks or helpers at Hardhat config load
 declare var hre: HardhatRuntimeEnvironment;
-
-export const getLeverageDepositor = async (
-  address?: tEthereumAddress
-): Promise<LeverageDepositor> => getContract("LeverageDepositor", address);
 
 export const getAToken = async (address: tEthereumAddress): Promise<AToken> =>
   getContract("AToken", address);

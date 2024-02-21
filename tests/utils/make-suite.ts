@@ -6,34 +6,33 @@ import {
 import { Signer } from "ethers";
 import { evmRevert, evmSnapshot } from "../../helpers/utilities/tx";
 import { tEthereumAddress } from "../../helpers/types";
-import { AaveProtocolDataProvider } from "../../typechain";
-import { AToken } from "../../typechain";
-import { PoolConfigurator } from "../../typechain";
-import { PoolAddressesProvider } from "../../typechain";
-import { PoolAddressesProviderRegistry } from "../../typechain";
 import {
-  LeverageDepositor,
+  AaveProtocolDataProvider,
+  AToken,
+  PoolConfigurator,
+  PoolAddressesProvider,
+  PoolAddressesProviderRegistry,
+  PacPoolWrapper,
   Pool,
   VariableDebtToken,
   WrappedTokenGatewayV3,
   AaveOracle,
   WETH9,
   Faucet,
+  GasRefund,
 } from "../../typechain";
 import {
-  LEVERAGE_DEPOSITOR,
+  PAC_POOL_WRAPPER,
   ORACLE_ID,
   POOL_ADDRESSES_PROVIDER_ID,
   POOL_CONFIGURATOR_PROXY_ID,
   POOL_DATA_PROVIDER,
   POOL_PROXY_ID,
+  GAS_REFUND,
 } from "../../helpers/deploy-ids";
 import {
   getAToken,
-  getERC20,
   getFaucet,
-  getLeverageDepositor,
-  getStableDebtToken,
   getVariableDebtToken,
   getWETH,
 } from "../../helpers/contract-getters";
@@ -63,7 +62,8 @@ export interface TestEnv {
   registry: PoolAddressesProviderRegistry;
   wrappedTokenGateway: WrappedTokenGatewayV3;
   faucetOwnable: Faucet;
-  leverageDepositor: LeverageDepositor;
+  poolWrapper: PacPoolWrapper;
+  gasRefund: GasRefund;
 }
 
 let HardhatSnapshotId: string = "0x1";
@@ -88,7 +88,8 @@ const testEnv: TestEnv = {
   registry: {} as PoolAddressesProviderRegistry,
   wrappedTokenGateway: {} as WrappedTokenGatewayV3,
   faucetOwnable: {} as Faucet,
-  leverageDepositor: {} as LeverageDepositor,
+  poolWrapper: {} as PacPoolWrapper,
+  gasRefund: {} as GasRefund,
 } as TestEnv;
 
 export async function initializeMakeSuite() {
@@ -175,11 +176,17 @@ export async function initializeMakeSuite() {
   testEnv.weth = await getWETH(wethAddress!);
   testEnv.debtWETH = await getVariableDebtToken(variableDebtAddress);
 
-  const leverageDepositor = await deployments.get(LEVERAGE_DEPOSITOR);
-  testEnv.leverageDepositor = (await ethers.getContractAt(
-    leverageDepositor.abi,
-    leverageDepositor.address
-  )) as LeverageDepositor;
+  const poolWrapper = await deployments.get(PAC_POOL_WRAPPER);
+  testEnv.poolWrapper = (await ethers.getContractAt(
+    poolWrapper.abi,
+    poolWrapper.address
+  )) as PacPoolWrapper;
+
+  const gasRefund = await deployments.get(GAS_REFUND);
+  testEnv.gasRefund = (await ethers.getContractAt(
+    gasRefund.abi,
+    gasRefund.address
+  )) as GasRefund;
 
   if (isTestnetMarket(poolConfig)) {
     testEnv.faucetOwnable = await getFaucet();

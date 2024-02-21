@@ -15,6 +15,8 @@ import {ScaledBalanceTokenBase} from "./base/ScaledBalanceTokenBase.sol";
 import {IncentivizedERC20} from "./base/IncentivizedERC20.sol";
 import {EIP712Base} from "./base/EIP712Base.sol";
 import {IBlast} from "../../../../interfaces/IBlast.sol";
+import {IERC20Rebasing} from "../../../../interfaces/IERC20Rebasing.sol";
+import {INativeYieldDistribute} from "../../../../interfaces/INativeYieldDistribute.sol";
 
 /**
  * @title Aave ERC20 AToken
@@ -31,8 +33,7 @@ contract AToken is
     using SafeCast for uint256;
     using GPv2SafeERC20 for IERC20;
 
-    IBlast public constant BLAST =
-        IBlast(0x4300000000000000000000000000000000000002);
+    address public immutable BLAST;
 
     bytes32 public constant PERMIT_TYPEHASH =
         keccak256(
@@ -43,6 +44,7 @@ contract AToken is
 
     address internal _treasury;
     address internal _underlyingAsset;
+    address public yieldDistributor;
 
     /// @inheritdoc VersionedInitializable
     function getRevision() internal pure virtual override returns (uint256) {
@@ -59,8 +61,7 @@ contract AToken is
         ScaledBalanceTokenBase(pool, "ATOKEN_IMPL", "ATOKEN_IMPL", 0)
         EIP712Base()
     {
-        //Set Gas Mode for Implementation Contract
-        BLAST.configureClaimableGas();
+        BLAST = pool.BLAST();
     }
 
     /// @inheritdoc IInitializableAToken
@@ -85,8 +86,9 @@ contract AToken is
 
         _domainSeparator = _calculateDomainSeparator();
 
-        //Set Gas Mode for Proxy Contract
-        BLAST.configureClaimableGas();
+        if (BLAST != address(0)) {
+            IBlast(BLAST).configureClaimableGas();
+        }
 
         emit Initialized(
             underlyingAsset,
@@ -107,7 +109,9 @@ contract AToken is
         uint256 amount,
         uint256 index
     ) external virtual override onlyPool returns (bool) {
-        return _mintScaled(caller, onBehalfOf, amount, index);
+        bool isFirstMint = _mintScaled(caller, onBehalfOf, amount, index);
+        _notifyBalanceChange(onBehalfOf);
+        return isFirstMint;
     }
 
     /// @inheritdoc IAToken
@@ -121,6 +125,7 @@ contract AToken is
         if (receiverOfUnderlying != address(this)) {
             IERC20(_underlyingAsset).safeTransfer(receiverOfUnderlying, amount);
         }
+        _notifyBalanceChange(from);
     }
 
     /// @inheritdoc IAToken
@@ -132,6 +137,7 @@ contract AToken is
             return;
         }
         _mintScaled(address(POOL), _treasury, amount, index);
+        _notifyBalanceChange(_treasury);
     }
 
     /// @inheritdoc IAToken
@@ -287,6 +293,9 @@ contract AToken is
             );
         }
 
+        _notifyBalanceChange(from);
+        _notifyBalanceChange(to);
+
         emit BalanceTransfer(from, to, amount.rayDiv(index), index);
     }
 
@@ -343,6 +352,24 @@ contract AToken is
     }
 
     function claimRefundedGas(address recipient) external onlyPool {
-        BLAST.claimMaxGas(address(this), recipient);
+        IBlast(BLAST).claimMaxGas(address(this), recipient);
+    }
+
+    function claimYield(address recipient) external onlyPoolAdmin {
+        IERC20Rebasing rebase = IERC20Rebasing(_underlyingAsset);
+        uint256 balance = rebase.getClaimableAmount(address(this));
+        rebase.claim(recipient, balance);
+    }
+
+    function _notifyBalanceChange(address user) internal {
+        if (yieldDistributor != address(0)) {
+            INativeYieldDistribute(yieldDistributor).aTokenBalanceChange(user);
+        }
+    }
+
+    function setYieldDistributor(
+        address _yieldDistributor
+    ) external onlyPoolAdmin {
+        yieldDistributor = _yieldDistributor;
     }
 }

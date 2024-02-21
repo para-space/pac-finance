@@ -398,3 +398,11 @@ export const isIncentivesEnabled = (poolConfig: ICommonConfiguration) => {
 
   return !!getParamPerNetwork(poolConfig.IncentivesConfig.enabled, network);
 };
+
+export const getBlastContractAddress = (networkName: string) => {
+  if (networkName === "blast" || networkName == "blast-testnet") {
+    return "0x4300000000000000000000000000000000000002";
+  } else {
+    return ZERO_ADDRESS;
+  }
+};

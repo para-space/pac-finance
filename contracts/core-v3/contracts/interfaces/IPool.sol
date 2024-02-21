@@ -671,6 +671,12 @@ interface IPool {
         returns (IPoolAddressesProvider);
 
     /**
+     * @notice Returns the BLAST connected to this contract
+     * @return The address of the BLAST
+     */
+    function BLAST() external view returns (address);
+
+    /**
      * @notice Updates the protocol fee on the bridging
      * @param bridgeProtocolFee The part of the premium sent to the protocol treasury
      */

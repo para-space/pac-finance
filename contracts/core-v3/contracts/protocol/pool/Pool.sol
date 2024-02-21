@@ -42,8 +42,7 @@ contract Pool is VersionedInitializable, PoolStorage, IPool {
     using ReserveLogic for DataTypes.ReserveData;
 
     uint256 public constant POOL_REVISION = 0x1;
-    IBlast public constant BLAST =
-        IBlast(0x4300000000000000000000000000000000000002);
+    address public immutable BLAST;
     IPoolAddressesProvider public immutable ADDRESSES_PROVIDER;
 
     /**
@@ -103,10 +102,9 @@ contract Pool is VersionedInitializable, PoolStorage, IPool {
      * @dev Constructor.
      * @param provider The address of the PoolAddressesProvider contract
      */
-    constructor(IPoolAddressesProvider provider) {
+    constructor(IPoolAddressesProvider provider, address blast) {
         ADDRESSES_PROVIDER = provider;
-        //Set Gas Mode for Implementation Contract
-        BLAST.configureClaimableGas();
+        BLAST = blast;
     }
 
     /**
@@ -124,7 +122,9 @@ contract Pool is VersionedInitializable, PoolStorage, IPool {
             Errors.INVALID_ADDRESSES_PROVIDER
         );
         _maxStableRateBorrowSizePercent = 0.25e4;
-        BLAST.configureClaimableGas();
+        if (BLAST != address(0)) {
+            IBlast(BLAST).configureClaimableGas();
+        }
     }
 
     /// @inheritdoc IPool
@@ -847,13 +847,9 @@ contract Pool is VersionedInitializable, PoolStorage, IPool {
 
     function claimRefundedGas(address recipient) external onlyPoolAdmin {
         //1. claim pool gas refund
-        BLAST.claimMaxGas(address(this), recipient);
+        IBlast(BLAST).claimMaxGas(address(this), recipient);
 
-        //2. claim oracle gas refund
-        address oracle = ADDRESSES_PROVIDER.getPriceOracle();
-        IGasReceiver(oracle).claimRefundedGas(recipient);
-
-        //3. claim all asset derive token gas refund
+        //2. claim all asset derive token gas refund
         address[] memory reserves = getReservesList();
         uint256 assetAmount = reserves.length;
         for (uint256 index = 0; index < assetAmount; index++) {

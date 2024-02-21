@@ -32,6 +32,7 @@ contract GasRefund is Ownable {
         _refundRatio[IGasRefund.RefundType.WITHDRAW] = 8000;
         _refundRatio[IGasRefund.RefundType.BORROW] = 8000;
         _refundRatio[IGasRefund.RefundType.REPAY] = 7000;
+        _refundRatio[IGasRefund.RefundType.LEVERAGEDEPOSIT] = 6000;
     }
 
     function gasBalance(address user) external view returns (uint256) {
