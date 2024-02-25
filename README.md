@@ -1,8 +1,11 @@
-# Aave V3 Deployments
+# Special Note
 
-[![npm (scoped)](https://img.shields.io/npm/v/@aave/deploy-v3)](https://www.npmjs.com/package/@aave/deploy-v3)
+We would like to first acknowledge that PAC Finance is originally a fork of the Aave v3 codebase. We are grateful for the foundation provided by Aave and are committed to contributing to the ongoing development and innovation within the DeFi ecosystem.
 
-This Node.js repository contains the configuration and deployment scripts for the Aave V3 protocol core and periphery contracts. The repository makes use of `hardhat` and `hardhat-deploy` tools to facilitate the deployment of Aave V3 protocol.
+
+# Pac Finance Deployments
+
+This Node.js repository contains the configuration and deployment scripts for the Pac Finance protocol core and periphery contracts. The repository makes use of `hardhat` and `hardhat-deploy` tools to facilitate the deployment of Pac Finance protocol.
 
 ## Requirements
 
@@ -25,9 +28,9 @@ This Node.js repository contains the configuration and deployment scripts for th
    npm run compile
    ```
 
-## How to deploy Aave V3 in testnet network
+## How to deploy Pac Finance in testnet network
 
-To deploy Aave V3 in a Testnet network, copy the `.env.example` into a `.env` file, and fill the environment variables `MNEMONIC`, and `ALCHEMY_KEY`.
+To deploy Pac Finance in a Testnet network, copy the `.env.example` into a `.env` file, and fill the environment variables `MNEMONIC`, and `ALCHEMY_KEY`.
 
 ```
 cp .env.example .env
@@ -45,7 +48,7 @@ Run the deployments scripts and specify which network & aave market configs you 
 HARDHAT_NETWORK=goerli npx hardhat deploy
 ```
 
-## How to deploy Aave V3 in fork network
+## How to deploy Pac Finance in fork network
 
 You can use the environment variable `FORK` with the network name to deploy into a fork.
 
@@ -91,7 +94,7 @@ describe('Tests', () => {
       // Set the MARKET_NAME env var
       process.env.MARKET_NAME = "Aave"
 
-      // Deploy Aave V3 contracts before running tests
+      // Deploy Pac Finance contracts before running tests
       await hre.deployments.fixture(['market', 'periphery-post']);`
    })
 
@@ -125,7 +128,3 @@ npx hardhat --network XYZ etherscan-verify --api-key YZX
 | markets/              | Directory to configure Aave markets                                                                                             |
 | tasks/                | Hardhat tasks to setup and review market configs                                                                                |
 | helpers/              | Utility helpers to manage configs and deployments                                                                               |
-
-## License
-
-Please be aware that [Aave V3](https://github.com/aave/aave-v3-core) is under [BSUL](https://github.com/aave/aave-v3-core/blob/master/LICENSE.md) license as of 27 January 2023 or date specified at v3-license-date.aave.eth. The Licensor hereby grants you the right to copy, modify, create derivative works, redistribute, and make non-production use of the Licensed Work. Any exceptions to this license may be specified by Aave governance. This repository containing the deployment scripts for the Aave V3 smart contracts can only be used for local or testing purposes. If you wish to deploy to a production environment you can reach out to Aave Governance [here](https://governance.aave.com/).
